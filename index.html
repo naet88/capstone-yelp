@@ -1,55 +1,62 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    
-    <meta name="description" content="">
-    <meta name="author" content="">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 
-    <title>Cover Template for Bootstrap</title>
-      
-      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/4.2.0/normalize.min.css">
-      <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+  <meta name="description" content="">
+  <meta name="author" content="">
 
+  <title>Cover Template for Bootstrap</title>
+  <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
 
-    <!-- Custom styles for this template -->
-
-    <link rel="stylesheet" href="bootstrap-3.3.7/css/bootstrap.css">
-    <link rel="stylesheet" href="bootstrap-3.3.7/css/bootstrap-theme.css">
-    <link rel="stylesheet" href="main.css">
-
-  </head>
-
-  <body>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/4.2.0/normalize.min.css">
+  <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
 
 
-  <div class="jumbotron jumbotron-custom">
-          
-  <div class="container">
-    <div class="row">
-      <div class="col-md-6 col-md-offset-3">
-        <div id="custom-search-input">
-            <div class="input-group">
-                <input type="text" class="input-lg" placeholder="Search Restaurants" />
-                <span class="input-group-btn">
-                    <button class="btn btn-lg">
-                        <i class="glyphicon glyphicon-search"></i>
-                    </button>
-                </span>
+  <!-- maps api -->
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAV-sTO3UuPBe9d_IxZXva_1XT9lNRSjPI&libraries=places"></script> 
+
+  <!-- Custom styles for this template -->
+  <link rel="stylesheet" href="bootstrap-3.3.7/css/bootstrap.css">
+  <link rel="stylesheet" href="bootstrap-3.3.7/css/bootstrap-theme.css">
+  <link rel="stylesheet" href="main.css">
+
+
+</head>
+
+<body>
+  <main>  
+    <div class="jumbotron jumbotron-custom">
+      <div class="container">
+          <div>
+          <h1></h1>
           </div>
+        <div class="input-group col-md-6 col-md-offset-3">
+
+          <input type="text" class="form-control" placeholder="Search for restaurants">
+          <span class="input-group-btn">
+            <button class="btn btn-secondary" type="button">Go!</button>
+          </span>
+        </div> 
       </div>
-  </div>
+    </div>
+  </main>
 
 
+</div>
 
-    <!-- Latest compiled and minified JavaScript -->
-     
-    <script type="text/javascript" src="bootstrap-3.3.7/js/bootstrap.js"></script>   
-    <script type="text/javascript" src="app.js"></script>  
-    <script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
 
-  </body>
+<div id="map">
+</div>
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAV-sTO3UuPBe9d_IxZXva_1XT9lNRSjPI&libraries=places&callback=initMap" async defer></script>
+<script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
+<script type="text/javascript" src="bootstrap-3.3.7/js/bootstrap.js"></script>   
+<script type="text/javascript" src="app.js"></script>  
+
+
+</body>
 </html>

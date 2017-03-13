@@ -1,57 +1,72 @@
-//found this but not terribly helpful: https://arian.io/how-to-use-yelps-api-with-node/
-
-// IMPORTANT THINGS: 
-// Consumer Key	N2QTA_xW62VfjrBfdk5Ajg
-// Consumer Secret	GaGj6X2-bvwA8Zt90yW4wo34e-s
-// Token	BdK0pRcoM19VshswGYXeTcD14hIQsBbS
-// Token Secret	LGhUDDD0IJbFKbL-g8YReWUalOM
-
-//THIS IS HELP API V2.0
-
-// var BASE_URL = 'https://api.yelp.com/v2/search?';
-
-// function getDataFromApi() {
-//   var query = {
-//     oauth_consumer_key: 'N2QTA_xW62VfjrBfdk5Ajg',
-//     oauth_token: 'BdK0pRcoM19VshswGYXeTcD14hIQsBbS',
-//     oauth_signature_method: 'HMAC-SHA1',
-//     oauth_signature: 'LGhUDDD0IJbFKbL-g8YReWUalOM',
-//	   location: 'San Francisco',
-//     // oauth_timestamp: //what?
-//     // oauth_nonce: //what?
-//   }
-   
-//   $.getJSON(BASE_URL, query, function(object) {
-//   	console.log(object);
-//   });
-// }
-
-// getDataFromApi();
+// API KEY: AIzaSyAV-sTO3UuPBe9d_IxZXva_1XT9lNRSjPI
 
 
+// https://maps.googleapis.com/maps/api/place/nearbysearch/json
+//   ?location=-33.8670522,151.1957362
+//   &radius=500
+//   &types=food
+//   &name=harbour
+//   &key=AIzaSyAV-sTO3UuPBe9d_IxZXva_1XT9lNRSjPI
+
+// https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=-33.8670522,151.1957362&radius=500&types=food&name=harbour&key=AIzaSyAV-sTO3UuPBe9d_IxZXva_1XT9lNRSjPI
 
 
-//
-//THIS IS YELP API FUSION
-//
-// App ID
-// -6An82XdZBjE1Zw-4BayHA
-// App Secret
-// 11p9S4aMXHdMNPJPEeHTErdZUKkI2iSdBa952CKK4h3NHxqf7tvVe2tyLQWqEok3
+// var APIkey = 'AIzaSyAV-sTO3UuPBe9d_IxZXva_1XT9lNRSjPI';
 
+// var BASE_URL = 'https://maps.googleapis.com/maps/api/place/nearbysearch/json';
 
-var BASE_URL = 'https://api.yelp.com/oauth2/token';
+var BASE_URL = 'freegeoip.net/json/github.com';
 
-function getDataFromApi() {
-  var query = {
-  	grant_type: 'client_credentials',
-  	client_id: '-6An82XdZBjE1Zw-4BayHA', 
-  	client_secret: '11p9S4aMXHdMNPJPEeHTErdZUKkI2iSdBa952CKK4h3NHxqf7tvVe2tyLQWqEok3',
-  }
-   
-  $.getJSON(BASE_URL, query, function(object) {
-  	console.log(object);
-  });
+function userIP () {
+	$.getJSON(BASE_URL, function(object) {
+		console.log(object);
+	};
 }
 
-getDataFromApi();
+
+var map;
+var infowindow;
+
+  function initMap() {
+    var sanFrancisco = {lat: 37.7749, lng: -122.4194};
+    // var pyrmont = {lat: -33.867, lng: 151.195};
+
+    map = new google.maps.Map(document.getElementById('map'), {
+      center: sanFrancisco,
+      // center: pyrmont,
+      zoom: 15
+    });
+
+    infowindow = new google.maps.InfoWindow();
+    var service = new google.maps.places.PlacesService(map);
+    service.nearbySearch({
+      location: sanFrancisco,
+      // rankBy: DISTANCE,
+      radius: 10000, //issue w/ max radius
+      type: ['restaurant'],
+      name: 'monsieur benjamin',
+    }, callback);
+  }
+
+  function callback(results, status) {
+    if (status === google.maps.places.PlacesServiceStatus.OK) {
+      for (var i = 0; i < results.length; i++) {
+        createMarker(results[i]);
+      }
+    }
+  }
+
+  function createMarker(place) {
+    var placeLoc = place.geometry.location;
+    var marker = new google.maps.Marker({
+      map: map,
+      position: place.geometry.location
+    });
+
+    google.maps.event.addListener(marker, 'click', function() {
+      infowindow.setContent(place.name);
+      infowindow.open(map, this);
+    });
+  }
+
+userIP();
