@@ -13,16 +13,25 @@
 
 // var APIkey = 'AIzaSyAV-sTO3UuPBe9d_IxZXva_1XT9lNRSjPI';
 
-// var BASE_URL = 'https://maps.googleapis.com/maps/api/place/nearbysearch/json';
+// var BASE_URL = 'http://freegeoip.net/json/';
+
+// function userIP () {
+// 	$.getJSON(BASE_URL, function(object) {
+// 		console.log(object);
+// 	});
+// };
+
+// userIP();
 
 var BASE_URL = 'freegeoip.net/json/github.com';
 
 function userIP () {
 	$.getJSON(BASE_URL, function(object) {
 		console.log(object);
-	};
-}
+	)};
+};
 
+userIP();
 
 var map;
 var infowindow;
@@ -69,4 +78,4 @@ var infowindow;
     });
   }
 
-userIP();
+
