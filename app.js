@@ -10,6 +10,16 @@
 //https://developers.google.com/maps/documentation/javascript/places#place_details
 
 
+//MS Text Analytics - FREE TRIAL
+// https://westus.api.cognitive.microsoft.com/text/analytics/v2.0
+ // POST https://westus.api.cognitive.microsoft.com/text/analytics/v2.0/sentiment
+ // POST https://westus.api.cognitive.microsoft.com/text/analytics/v2.0/keyPhrases
+ // POST https://westus.api.cognitive.microsoft.com/text/analytics/v2.0/languages
+
+// API Key 1: 0c3b04acec264c47a5fce6cf873b15ed
+// API Key 2: 1f4a60c7d2454b74887d32e1fa7178c8
+// GUIDE: https://docs.microsoft.com/en-us/azure/cognitive-services/cognitive-services-text-analytics-quick-start 
+
 //STEP 1: STATE
 
 var APIkey = 'AIzaSyAV-sTO3UuPBe9d_IxZXva_1XT9lNRSjPI';
@@ -22,7 +32,6 @@ var state = {
 	restaurant: '',
 	placesService: '',
 };
-
 
 function getGeoCode(city, callback) {
 	var geoURL = 'https://maps.googleapis.com/maps/api/geocode/json'; 
@@ -40,7 +49,6 @@ function getGeoCode(city, callback) {
 function updateLngLat(object) {
 	state.lat = object.results[0].geometry.location.lat;
 	state.lng = object.results[0].geometry.location.lng;
-	
 }
 
 function updateRestaurant(object) {
@@ -52,7 +60,7 @@ function updateCity(object) {
 }
 
 function updatePlacesID(object) {
-	//assuming we use the first item in the array...maybe not the best assumption? 
+	//assuming we use the first item in the array
 	state.placesID = object[0].place_id;
 }
 
@@ -98,6 +106,18 @@ function testDisplay(object) {
     	console.log(object);
 }
 
+function getReviews(object) {
+	var reviewsArray = [];
+
+	object.reviews.forEach(function(element) {
+		reviewsArray.push(element.text);
+	});
+
+	//need to make into JSON format for MS API w/ ID and Text. 
+
+	console.log(JSON.stringify(reviewsArray));
+}
+
 //STEP 4: JQUERY EVENT LISTENERS
 
 
@@ -123,7 +143,7 @@ $('form#restaurant-search').on('submit', function(event) {
 			  placeId: state.placesID,
 			};
 
-			state.placesService.getDetails(request, testDisplay);
+			state.placesService.getDetails(request, getReviews);
 		});
 	});		
 })
