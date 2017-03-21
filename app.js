@@ -31,6 +31,8 @@ var state = {
 	placesID: '',
 	restaurant: '',
 	placesService: '',
+	reviews: [],
+	formattedPayload: {},
 };
 
 function getGeoCode(city, callback) {
@@ -102,23 +104,43 @@ function placesSearchAPI(callback) {
     }, callback);
 };
 
+//I don't need (callback) do I?
+function getKeyPhrases(callback) {
+
+	var formattedPayload = {
+		documents: [],
+	}; 
+
+	state.reviews.forEach(function(review, index) {
+		var entry = {
+			language: 'en', 
+			id: index.toString(), 
+			text: review,
+			};
+
+		formattedPayload.documents.push(entry);
+		
+	})
+
+	state.formattedPayload = formattedPayload;
+	
+};
+
+
+
+function getReviews(object) {
+	object.reviews.forEach(function(element) {
+		state.reviews.push(element.text);
+	});
+}
+
+
 function testDisplay(object) {
     	console.log(object);
 }
 
-function getReviews(object) {
-	var reviewsArray = [];
-
-	object.reviews.forEach(function(element) {
-		reviewsArray.push(element.text);
-	});
-
-	//need to make into JSON format for MS API w/ ID and Text. 
-
-	console.log(JSON.stringify(reviewsArray));
-}
-
 //STEP 4: JQUERY EVENT LISTENERS
+
 
 
 $('form#restaurant-search').on('submit', function(event) {
@@ -143,7 +165,17 @@ $('form#restaurant-search').on('submit', function(event) {
 			  placeId: state.placesID,
 			};
 
-			state.placesService.getDetails(request, getReviews);
+			state.placesService.getDetails(request, function(placesDetailsObject) {
+				getReviews(placesDetailsObject);
+				console.log(state);
+			
+				getKeyPhrases();
+
+
+
+			});
+
+
 		});
 	});		
 })
@@ -152,6 +184,13 @@ initMap();
 
 renderPage(state, $('main'));
 
+//Next steps:
+// get the formatted payload and put into MS API to get output. 
+
+
+
+
+//http://callbackhell.com/
 
 //this didn't work at first. Why.  
 // function getLngLat(object) {
