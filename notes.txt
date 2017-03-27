@@ -1,0 +1,26 @@
+GOOGLE PLACES API
+
+Geocoding
+https://maps.googleapis.com/maps/api/geocode/json?address=Palo+Alto&key=AIzaSyAV-sTO3UuPBe9d_IxZXva_1XT9lNRSjPI
+
+Places Details 
+https://developers.google.com/maps/documentation/javascript/places#place_details
+
+
+MS TEXT ANALYTICS API 
+
+MS Text Analytics - FREE TRIAL
+https://westus.api.cognitive.microsoft.com/text/analytics/v2.0
+ POST https://westus.api.cognitive.microsoft.com/text/analytics/v2.0/sentiment
+ POST https://westus.api.cognitive.microsoft.com/text/analytics/v2.0/keyPhrases
+ POST https://westus.api.cognitive.microsoft.com/text/analytics/v2.0/languages
+
+API Key 1: 0c3b04acec264c47a5fce6cf873b15ed
+API Key 2: 1f4a60c7d2454b74887d32e1fa7178c8
+GUIDE: https://docs.microsoft.com/en-us/azure/cognitive-services/cognitive-services-text-analytics-quick-start 
+
+
+OTHER NOTES
+
+- WHEN USING GET REQUEST AND A URL, (https://maps.googleapis.com/maps/api/geocode/json), 
+BETTER TO REMOVE LAST ?
