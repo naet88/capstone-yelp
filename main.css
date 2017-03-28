@@ -1,3 +1,6 @@
+body {
+    font-family: Roboto;
+}
 #map {
 	height: 100%; 
     width: 100%; 
@@ -25,4 +28,16 @@
 
     background-size: cover;
 }
-    
+
+.wordcloud-container {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    padding-top: 40px;
+
+}
+
+#wordcloud {
+    width: 550;
+    height: 350px;
+}
