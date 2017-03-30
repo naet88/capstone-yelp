@@ -11,10 +11,6 @@ var APIkey_microsoft = '0c3b04acec264c47a5fce6cf873b15ed';
 
 var reviewsKeyPhrasesObject = {};
 
-// var keyPhrasesOutput = [];
-
-// var wordCounterOutput = [];
-
 var state = {
 	lat: '',
 	lng: '',
@@ -72,9 +68,8 @@ function renderSearchResultsPage(state, element) {
 }
 
 function createWordCloud(state, element) {
-	$('#wordcloud').jQCloud(state.wordCounterOutput);	
+	$(element).jQCloud(state.wordCounterOutput);	
 }
-
 
 //PLACES RADAR SEARCH 
 
@@ -96,15 +91,15 @@ function placesSearchAPI(callback) {
 };
 
 function getReviews(object) {
+	state.reviews = [];
+
 	object.reviews.forEach(function(element) {
 		state.reviews.push(element.text);
 	});
-}
-
+}	
 
 //MICROSOFT TEXT ANALYTICS API 
 
-//I don't need (callback) do I?
 function getKeyPhrases(callback) {
 
 	var formattedPayload = {
@@ -142,6 +137,7 @@ function createWordsArray(object) {
 	//emptying
 	state.keyPhrasesOutput = [];
 	state.wordCounterOutput = [];
+
 
 	console.log('emptied', state.keyPhrasesOutput);
 
@@ -207,7 +203,7 @@ $('form#restaurant-search').on('submit', function(event) {
 				
 				getKeyPhrases(function(keyPhrasesObject) {
 					createWordsArray(keyPhrasesObject);
-					createWordCloud();
+					createWordCloud(state, $('#wordcloud'));
 				})
 				// getKeyPhrases(createWordsArray); 
 
