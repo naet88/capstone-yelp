@@ -143,10 +143,6 @@ function createWordsArray(object) {
 	state.keyPhrasesOutput = [];
 	state.wordCounterOutput = [];
 
-	// state.keyPhrasesOutput.length = 0;
-
-	// state.wordCounterOutput.length = 0;
-
 	console.log('emptied', state.keyPhrasesOutput);
 
 	object.documents.forEach(function(documentElement) {
