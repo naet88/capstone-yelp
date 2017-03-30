@@ -11,9 +11,9 @@ var APIkey_microsoft = '0c3b04acec264c47a5fce6cf873b15ed';
 
 var reviewsKeyPhrasesObject = {};
 
-var keyPhrasesOutput = [];
+// var keyPhrasesOutput = [];
 
-var wordCounterOutput = [];
+// var wordCounterOutput = [];
 
 var state = {
 	lat: '',
@@ -23,6 +23,8 @@ var state = {
 	restaurant: '',
 	placesService: '',
 	reviews: [],
+	keyPhrasesOutput: [],
+	wordCounterOutput: [],
 };
 
 function getGeoCode(city, callback) {
@@ -66,10 +68,11 @@ function renderSearchResultsPage(state, element) {
 	$(element).find('.js-search-results').show();
 	$(element).find('.js-restaurant').text(state.restaurant);
 	$(element).find('.js-city').text(state.city);	
+	$('#wordcloud').empty();
 }
 
 function createWordCloud(state, element) {
-	$('#wordcloud').jQCloud(wordCounterOutput);	
+	$('#wordcloud').jQCloud(state.wordCounterOutput);	
 }
 
 
@@ -135,22 +138,34 @@ function getKeyPhrases(callback) {
 	
 function createWordsArray(object) {
 
-	object.documents.forEach(function(element) {
-		element.keyPhrases.forEach(function(element) {
-			keyPhrasesOutput.push(element.toLowerCase());
+	//LAST BUG 
+	//emptying
+	state.keyPhrasesOutput = [];
+	state.wordCounterOutput = [];
+
+	// state.keyPhrasesOutput.length = 0;
+
+	// state.wordCounterOutput.length = 0;
+
+	console.log('emptied', state.keyPhrasesOutput);
+
+	object.documents.forEach(function(documentElement) {
+		documentElement.keyPhrases.forEach(function(keyPhraseElement) {
+			state.keyPhrasesOutput.push(keyPhraseElement.toLowerCase());
 		}) 
-		keyPhrasesOutput.sort();
+		state.keyPhrasesOutput.sort();
 	});
   
   
-  console.log(keyPhrasesOutput);
+  // console.log(keyPhrasesOutput);
 
-  keyPhrasesOutput.forEach(function (word) {
-    var wordFound = keyPhrasesOutput.find(function (item) {
+  state.keyPhrasesOutput.forEach(function (word) {
+    var wordFound = state.wordCounterOutput.find(function (item) {
 
       return item.text === word;
     });
 
+    //if (wordFound !== 'undefined')
     if (wordFound) {
       //is wordFound a truthy value
 
@@ -158,13 +173,12 @@ function createWordsArray(object) {
 
     } else {
 
-      wordCounterOutput.push({text: word, weight: 1})
+      state.wordCounterOutput.push({text: word, weight: 1})
     }
 
   });
 
-  //the output is showing a weight of 1 across the board which is incorrect.  
-  console.log(wordCounterOutput);
+  console.log('wordcounteroutput', state.wordCounterOutput);
 	
 }
 
@@ -195,10 +209,14 @@ $('form#restaurant-search').on('submit', function(event) {
 			state.placesService.getDetails(request, function(placesDetailsObject) {
 				getReviews(placesDetailsObject);
 				
-				getKeyPhrases(createWordsArray); 
+				getKeyPhrases(function(keyPhrasesObject) {
+					createWordsArray(keyPhrasesObject);
+					createWordCloud();
+				})
+				// getKeyPhrases(createWordsArray); 
 
-				//need to execute this last line AFTER output is created. 
-				createWordCloud();
+				// //need to execute this last line AFTER output is created. 
+				// createWordCloud();
 
 			});
 		});
